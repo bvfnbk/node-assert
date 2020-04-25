@@ -1,0 +1,39 @@
+{
+    "name": "@bvfnbk/node-assert",
+    "version": "0.1.0",
+    "type": "module",
+    "description": "Assert utilities to validate input arguments.",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "nodemon --exec babel-node src/index.js",
+        "build": "babel src --out-dir ./dist --source-maps",
+        "test": "mocha --require @babel/register",
+        "debug": "node --inspect-brk ./dist/index.js",
+        "lint": "eslint src/**  test/**"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bvfnbk/node-assert.git"
+    },
+    "keywords": [
+        "nodejs",
+        "javascript"
+    ],
+    "author": "bvfnbk@web.de",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/bvfnbk/node-assert/issues"
+    },
+    "homepage": "https://github.com/bvfnbk/node-assert",
+    "devDependencies": {
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.9.0",
+        "@babel/node": "^7.8.7",
+        "@babel/preset-env": "^7.9.5",
+        "@babel/register": "^7.9.0",
+        "chai": "^4.2.0",
+        "eslint": "^6.8.0",
+        "mocha": "^7.1.1",
+        "nodemon": "^2.0.3"
+    }
+}
