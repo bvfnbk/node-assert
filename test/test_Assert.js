@@ -1,6 +1,6 @@
 import mocha from 'mocha';
 import chai from 'chai';
-import {Assert, GenericAssert}  from '../src/index.js';
+import {Assert, GenericAssert} from '../src/node-assert/index.js';
 
 
 const describe = mocha.describe;

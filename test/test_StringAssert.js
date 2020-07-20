@@ -1,6 +1,7 @@
 import mocha from 'mocha';
 import chai from 'chai';
-import {Assert, IllegalArgumentError, StringAssert} from '../src/index.js';
+import {Assert, StringAssert} from '../src/node-assert/index.js';
+import {IllegalArgumentError} from '../src/node-assert/error/index.js';
 
 
 const describe = mocha.describe;
@@ -13,12 +14,15 @@ describe('StringAssert', () => {
     it('throws illegal argument error when given an empty string', () => {
       expect(() => Assert.that('').string().notBlank()).to.throw(IllegalArgumentError);
     });
+
     it('throws illegal argument error when given string contains only tab', () => {
       expect(() => Assert.that('\t').string().notBlank()).to.throw(IllegalArgumentError);
     });
+
     it('throws illegal argument error when given string contains only newline', () => {
       expect(() => Assert.that('\n').string().notBlank()).to.throw(IllegalArgumentError);
     });
+
     it('throws illegal argument error when given string contains only spaces', () => {
       expect(() => Assert.that(' ').string().notBlank()).to.throw(IllegalArgumentError);
     });

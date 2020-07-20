@@ -22,7 +22,7 @@
         "build": "babel src --out-dir ./dist --source-maps",
         "debug": "node --inspect-brk ./dist/index.js",
         "lint": "eslint src/**  test/**",
-        "start": "nodemon --exec babel-node src/index.js",
+        "start": "nodemon --exec babel-node src/node-assert/index.js",
         "test": "mocha --require @babel/register"
     },
     "devDependencies": {
