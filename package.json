@@ -17,10 +17,10 @@
     "license": "Apache-2.0",
     "author": "bvfnbk@web.de",
     "type": "module",
-    "main": "dist/index.js",
+    "main": "dist/node-assert/index.js",
     "scripts": {
         "build": "babel src --out-dir ./dist --source-maps",
-        "debug": "node --inspect-brk ./dist/index.js",
+        "debug": "node --inspect-brk ./dist/node-assert/index.js",
         "lint": "eslint src/**  test/**",
         "start": "nodemon --exec babel-node src/node-assert/index.js",
         "test": "mocha --require @babel/register"
