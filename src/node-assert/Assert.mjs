@@ -1,4 +1,4 @@
-import GenericAssert from './GenericAssert.js';
+import GenericAssert from './GenericAssert.mjs';
 
 
 /**

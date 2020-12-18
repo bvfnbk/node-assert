@@ -1,4 +1,4 @@
-import {IllegalArgumentError, TypeConstraintError} from './error/index.js';
+import {IllegalArgumentError, TypeConstraintError} from './error/index.mjs';
 
 /**
  * A string assert providing methods specific to the validation of strings.

@@ -1,4 +1,4 @@
-import IllegalArgumentError from './IllegalArgumentError.js';
+import IllegalArgumentError from './IllegalArgumentError.mjs';
 
 /**
  * Thrown when given value does not match expected type.

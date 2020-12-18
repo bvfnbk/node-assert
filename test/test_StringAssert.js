@@ -1,7 +1,7 @@
 import mocha from 'mocha';
 import chai from 'chai';
-import {Assert, StringAssert} from '../src/node-assert/index.js';
-import {IllegalArgumentError} from '../src/node-assert/error/index.js';
+import {Assert, StringAssert} from '../src/node-assert/index.mjs';
+import {IllegalArgumentError} from '../src/node-assert/error/index.mjs';
 
 
 const describe = mocha.describe;

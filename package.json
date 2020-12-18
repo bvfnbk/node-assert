@@ -17,23 +17,14 @@
     "license": "Apache-2.0",
     "author": "bvfnbk@web.de",
     "type": "module",
-    "main": "dist/node-assert/index.js",
     "scripts": {
-        "build": "babel src --out-dir ./dist --source-maps",
-        "debug": "node --inspect-brk ./dist/node-assert/index.js",
         "lint": "eslint src/**  test/**",
-        "start": "nodemon --exec babel-node src/node-assert/index.js",
-        "test": "mocha --require @babel/register"
+        "test": "mocha"
     },
     "devDependencies": {
-        "@babel/cli": "^7.8.4",
-        "@babel/core": "^7.9.0",
-        "@babel/node": "^7.8.7",
-        "@babel/preset-env": "^7.9.5",
-        "@babel/register": "^7.9.0",
         "chai": "^4.2.0",
         "eslint": "^6.8.0",
-        "mocha": "^7.1.1",
-        "nodemon": "^2.0.3"
+        "mocha": "^7.2.0",
+        "nodemon": "^2.0.4"
     }
 }

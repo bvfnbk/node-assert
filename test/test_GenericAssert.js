@@ -1,7 +1,7 @@
 import mocha from 'mocha';
 import chai from 'chai';
-import {Assert, GenericAssert, StringAssert} from '../src/node-assert/index.js';
-import {NullArgumentError, TypeConstraintError, UndefinedArgumentError} from '../src/node-assert/error/index.js';
+import {Assert, GenericAssert, StringAssert} from '../src/node-assert/index.mjs';
+import {NullArgumentError, TypeConstraintError, UndefinedArgumentError} from '../src/node-assert/error/index.mjs';
 
 
 const describe = mocha.describe;
