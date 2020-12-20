@@ -17,6 +17,10 @@
     "license": "Apache-2.0",
     "author": "bvfnbk@web.de",
     "type": "module",
+    "files": [
+        "dist"
+    ],
+    "main": "dist/node-assert/index.mjs",
     "scripts": {
         "lint": "eslint src/**  test/**",
         "test": "mocha",

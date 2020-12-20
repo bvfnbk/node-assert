@@ -1,0 +1,9 @@
+src/
+test/
+.idea/
+*.iml
+.editorconfig
+.eslintrc.yml
+.gitignore
+.mocharc.yaml
+.travis.yml
