@@ -19,12 +19,17 @@
     "type": "module",
     "scripts": {
         "lint": "eslint src/**  test/**",
-        "test": "mocha"
+        "test": "mocha",
+        "dist": "copyfiles -u 1 src/node-assert/**/*.mjs dist",
+        "clean": "rimraf dist",
+        "redist": "npm-run-all clean dist"
     },
     "devDependencies": {
         "chai": "^4.2.0",
+        "copyfiles": "^2.4.1",
         "eslint": "^6.8.0",
         "mocha": "^7.2.0",
-        "nodemon": "^2.0.4"
+        "npm-run-all": "^4.1.5",
+        "rimraf": "^2.6.3"
     }
 }
