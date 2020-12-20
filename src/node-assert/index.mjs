@@ -3,7 +3,7 @@ import GenericAssert from './GenericAssert.mjs';
 import StringAssert from './StringAssert.mjs';
 
 export {
-    Assert,
-    GenericAssert,
-    StringAssert
+  Assert,
+  GenericAssert,
+  StringAssert
 };

@@ -4,8 +4,8 @@ import UndefinedArgumentError from './UndefinedArgumentError.mjs';
 import TypeConstraintError from './TypeConstraintError.mjs';
 
 export {
-    IllegalArgumentError,
-    NullArgumentError,
-    UndefinedArgumentError,
-    TypeConstraintError
+  IllegalArgumentError,
+  NullArgumentError,
+  UndefinedArgumentError,
+  TypeConstraintError
 };

@@ -2,14 +2,14 @@ import {NullArgumentError, UndefinedArgumentError} from './error/index.mjs';
 import StringAssert from './StringAssert.mjs';
 
 export default class GenericAssert {
-    /**
-     * Creates a generic assert.
-     *
-     * @param value The value to wrap. May be anything.
-     */
-    constructor(value) {
-        this.value = value;
-    }
+  /**
+   * Creates a generic assert.
+   *
+   * @param value The value to wrap. May be anything.
+   */
+  constructor(value) {
+    this.value = value;
+  }
 
   /**
    * Asserts wrapped value is defined.

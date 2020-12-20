@@ -4,7 +4,7 @@ import {Assert, GenericAssert} from '../src/node-assert/index.mjs';
 
 
 const describe = mocha.describe;
-const it =  mocha.it;
+const it = mocha.it;
 const expect = chai.expect;
 
 
