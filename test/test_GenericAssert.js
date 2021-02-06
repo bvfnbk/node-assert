@@ -10,85 +10,85 @@ const expect = chai.expect;
 
 
 describe('GenericAssert', () => {
-  describe('defined()', () => {
+  describe('isDefined()', () => {
     it('throws undefined argument error if given an undefined value.', () => {
       let genericAssert = Assert.that();
-      expect(() => genericAssert.defined()).to.throw(UndefinedArgumentError);
+      expect(() => genericAssert.isDefined()).to.throw(UndefinedArgumentError);
     });
 
     it('throws undefined argument error if given undefined.', () => {
       let genericAssert = Assert.that(undefined);
-      expect(() => genericAssert.defined()).to.throw(UndefinedArgumentError);
+      expect(() => genericAssert.isDefined()).to.throw(UndefinedArgumentError);
     });
 
     it('returns a generic assert if it succeeds.', () => {
       let genericAssert = Assert.that('value');
-      expect(genericAssert.defined()).to.be.instanceof(GenericAssert);
+      expect(genericAssert.isDefined()).to.be.instanceof(GenericAssert);
     });
   });
 
-  describe('notNull()', () => {
+  describe('isNotNull()', () => {
     it('throws undefined argument error if given an undefined value.', () => {
       let genericAssert = Assert.that();
-      expect(() => genericAssert.notNull()).to.throw(UndefinedArgumentError);
+      expect(() => genericAssert.isNotNull()).to.throw(UndefinedArgumentError);
     });
 
     it('throws undefined argument error if given undefined.', () => {
       let genericAssert = Assert.that(undefined);
-      expect(() => genericAssert.notNull()).to.throw(UndefinedArgumentError);
+      expect(() => genericAssert.isNotNull()).to.throw(UndefinedArgumentError);
     });
 
     it('throws null argument error if given null.', () => {
       let genericAssert = Assert.that(null);
-      expect(() => genericAssert.notNull()).to.throw(NullArgumentError);
+      expect(() => genericAssert.isNotNull()).to.throw(NullArgumentError);
     });
 
     it('returns a generic assert if it succeeds.', () => {
       let genericAssert = Assert.that('value');
-      expect(genericAssert.notNull()).to.be.instanceof(GenericAssert);
+      expect(genericAssert.isNotNull()).to.be.instanceof(GenericAssert);
     });
   });
 
-  describe('string()', () => {
+  describe('isString()', () => {
     it('throws undefined argument error if given an undefined value.', () => {
       let genericAssert = Assert.that();
-      expect(() => genericAssert.string()).to.throw(UndefinedArgumentError);
+      expect(() => genericAssert.isString()).to.throw(UndefinedArgumentError);
     });
 
     it('throws undefined argument error if given undefined.', () => {
       let genericAssert = Assert.that(undefined);
-      expect(() => genericAssert.string()).to.throw(UndefinedArgumentError);
+      expect(() => genericAssert.isString()).to.throw(UndefinedArgumentError);
     });
 
     it('throws null argument error if given null.', () => {
       let genericAssert = Assert.that(null);
-      expect(() => genericAssert.string()).to.throw(NullArgumentError);
+      expect(() => genericAssert.isString()).to.throw(NullArgumentError);
     });
 
     it('throws type constraint error if given number.', () => {
       let genericAssert = Assert.that(123);
-      expect(() => genericAssert.string()).to.throw(TypeConstraintError);
+      expect(() => genericAssert.isString()).to.throw(TypeConstraintError);
     });
 
     it('throws type constraint error if given list.', () => {
       let genericAssert = Assert.that([]);
-      expect(() => genericAssert.string()).to.throw(TypeConstraintError);
+      expect(() => genericAssert.isString()).to.throw(TypeConstraintError);
     });
 
     it('throws type constraint error if given object.', () => {
       let genericAssert = Assert.that({});
-      expect(() => genericAssert.string()).to.throw(TypeConstraintError);
+      expect(() => genericAssert.isString()).to.throw(TypeConstraintError);
     });
 
     it('throws type constraint error if given function.', () => {
       let genericAssert = Assert.that(() => {
       });
-      expect(() => genericAssert.string()).to.throw(TypeConstraintError);
+      expect(() => genericAssert.isString()).to.throw(TypeConstraintError);
     });
 
-    it('returns a string assert if it succeeds.', () => {
+    it('returns a isString assert if it succeeds.', () => {
       let genericAssert = Assert.that('value');
-      expect(genericAssert.string()).to.be.instanceof(StringAssert);
+      expect(genericAssert.isString()).to.be.instanceof(StringAssert);
     });
   });
 });

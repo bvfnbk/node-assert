@@ -1,8 +1,12 @@
 /**
  * Thrown when given value violates other, unspecific constraint.
+ *
+ * @author bvfnbk
  */
-export default class IllegalArgumentError extends Error {
+class IllegalArgumentError extends Error {
   constructor() {
     super();
   }
 }
+
+export default IllegalArgumentError;

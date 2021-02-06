@@ -1,0 +1,21 @@
+{
+    "opts": {
+        "template": "node_modules/minami/",
+        "encoding": "utf8",
+        "destination": "dist/docs/api/",
+        "recurse": true
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": true,
+        "useLongnameInNav": false,
+        "showInheritedInNav": true
+    },
+    "source": {
+        "include" : ["./src/"],
+        "includePattern": ".+\\.mjs?$"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ]
+}

@@ -1,14 +1,16 @@
 import {IllegalArgumentError, TypeConstraintError} from './error/index.mjs';
 
 /**
- * A string assert providing methods specific to the validation of strings.
+ * A `string` assert providing methods specific to the validation of strings.
+ *
+ * @author bvfnbk
  */
-export default class StringAssert {
+class StringAssert {
   /**
-   * Creates assert
+   * Asserts that the type of the given `value` is `string`.
    *
-   * @param value The value to wrap.
-   * @throws TypeConstraintError if given value is no string.
+   * @param {string} value The value to wrap.
+   * @throws {TypeConstraintError} if given value is no `string`.
    */
   constructor(value) {
     if (typeof value !== 'string') {
@@ -18,11 +20,12 @@ export default class StringAssert {
   }
 
   /**
-   * Test whether wrapped value is not blank; throws {IllegalArgumentError} if blank.
+   * Tests whether wrapped value is not blank
    *
-   * @return {StringAssert}
+   * @returns {StringAssert} the current instance.
+   * @throws {IllegalArgumentError} if wrapped `value` is blank.
    */
-  notBlank() {
+  isNotBlank() {
     if (this.value.trim() === '') {
       throw new IllegalArgumentError();
     }
@@ -30,14 +33,17 @@ export default class StringAssert {
   }
 
   /**
-   * Test whether wrapped value is not empty; throws {IllegalArgumentError} if empty.
+   * Test whether wrapped value is not empty.
    *
-   * @return {StringAssert}
+   * @return {StringAssert} the current instance.
+   * @throws {IllegalArgumentError} if the wrapped `value` is the empty `string`.
    */
-  notEmpty() {
+  isNotEmpty() {
     if (this.value === '') {
       throw new IllegalArgumentError();
     }
     return this;
   }
 }
+
+export default StringAssert;

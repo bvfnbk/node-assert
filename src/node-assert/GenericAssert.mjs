@@ -1,11 +1,16 @@
 import {NullArgumentError, UndefinedArgumentError} from './error/index.mjs';
 import StringAssert from './StringAssert.mjs';
 
-export default class GenericAssert {
+/**
+ * A generic assert. Provides methods to assert common properties, like whether a value is defined or `null`.
+ *
+ * @author bvfnbk
+ */
+class GenericAssert {
   /**
    * Creates a generic assert.
    *
-   * @param value The value to wrap. May be anything.
+   * @param {*} value The value to wrap. May be anything.
    */
   constructor(value) {
     this.value = value;
@@ -14,10 +19,10 @@ export default class GenericAssert {
   /**
    * Asserts wrapped value is defined.
    *
-   * @return {GenericAssert}
+   * @returns {GenericAssert} the current instance.
    * @throws {UndefinedArgumentError} if the contained value is not defined.
    */
-  defined() {
+  isDefined() {
     if (typeof this.value === 'undefined') {
       throw new UndefinedArgumentError();
     }
@@ -25,14 +30,14 @@ export default class GenericAssert {
   }
 
   /**
-   * Asserts wrapped value is not <code>null</code>
+   * Asserts wrapped value is not `null`.
    *
-   * @return {GenericAssert} this assert to support fluent validation.
+   * @returns {GenericAssert} the current instance.
    * @throws {UndefinedArgumentError} if the contained value is not defined.
-   * @throws {NullArgumentError} if the contained value is <code>null</code>
+   * @throws {NullArgumentError} if the contained value is `null`.
    */
-  notNull() {
-    this.defined();
+  isNotNull() {
+    this.isDefined();
     if (this.value === null) {
       throw new NullArgumentError();
     }
@@ -40,15 +45,20 @@ export default class GenericAssert {
   }
 
   /**
-   * Asserts wrapped value is a <code>string</code>.
+   * Asserts wrapped value is a `string`
    *
-   * @return {StringAssert} A <code>string</code>-specific assert.
+   * **Please note:** This method asserts that the value is not `null`, the type assertion is performed in the
+   * constructor {@link StringAssert}
+   *
+   * @returns {StringAssert} A `string`-specific assert (to continue validation).
    * @throws {UndefinedArgumentError} if the contained value is not defined.
-   * @throws {NullArgumentError} if the contained value is <code>null</code>
-   * @throws {TypeConstraintError} if the contained value is no <code>string</code>
+   * @throws {NullArgumentError} if the contained value is `null`
+   * @throws {TypeConstraintError} if the contained value is no `string`
    */
-  string() {
-    this.notNull();
+  isString() {
+    this.isNotNull();
     return new StringAssert(this.value);
   }
 }
+
+export default GenericAssert;
