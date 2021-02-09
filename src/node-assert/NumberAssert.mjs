@@ -13,30 +13,26 @@ class NumberAssert {
   }
 
   isGreaterThan(other) {
-    Assert.that(other).isNotNull();
-    NumberAssert.assertIsNumber(other);
-    if (this.value <= other) {
-      throw new IllegalArgumentError();
-    }
+    NumberAssert.executeAssert(this.value, other, (a, b) => a > b);
     return this;
   }
 
   isLowerThan(other) {
-    Assert.that(other).isNotNull();
-    NumberAssert.assertIsNumber(other);
-    if (this.value >= other) {
-      throw new IllegalArgumentError();
-    }
+    NumberAssert.executeAssert(this.value, other, (a, b) => a < b);
     return this;
   }
 
   equals(other) {
-    Assert.that(other).isNotNull();
-    NumberAssert.assertIsNumber(other);
-    if (this.value !== other) {
+    NumberAssert.executeAssert(this.value, other, (a, b) => a === b);
+    return this;
+  }
+
+  static executeAssert(reference, given, comparisonFunction) {
+    Assert.that(given).isNotNull();
+    NumberAssert.assertIsNumber(given);
+    if (!comparisonFunction(reference, given)) {
       throw new IllegalArgumentError();
     }
-    return this;
   }
 
   static assertIsNumber(value) {
