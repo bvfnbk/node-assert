@@ -65,6 +65,21 @@ class NumberAssert {
   }
 
   /**
+   * Asserts that the other value is greater, or equals than the reference value.
+   *
+   * @param {number} other The value to compare.
+   * @returns {NumberAssert} the current instance.
+   * @throws {IllegalArgumentError} if the reference value is greater than the given value.
+   * @throws {UndefinedArgumentError} if the given value is not defined.
+   * @throws {NullArgumentError} if the given value is `null`.
+   * @throws {TypeConstraintError} if the given value is no number.
+   */
+  isLowerThanOrEquals(other) {
+    NumberAssert.executeAssert(this.value, other, (a, b) => a <= b);
+    return this;
+  }
+
+  /**
    * Asserts that the other value is equal to the reference value.
    *
    * @param {number} other The value to compare.
