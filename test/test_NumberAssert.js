@@ -101,4 +101,48 @@ describe('NumberAssert', () => {
       expect(numberAssert.isLowerThan(reference + 1)).to.be.instanceof(NumberAssert);
     });
   });
+
+  describe('equals()', () => {
+    let reference = 100;
+    let numberAssert = Assert.that(reference).isNumber();
+    it('throws undefined argument error if given an undefined value.', () => {
+      expect(() => numberAssert.equals()).to.throw(UndefinedArgumentError);
+    });
+
+    it('throws undefined argument error if given undefined.', () => {
+      expect(() => numberAssert.equals(undefined)).to.throw(UndefinedArgumentError);
+    });
+
+    it('throws null argument error if given null.', () => {
+      expect(() => numberAssert.equals(null)).to.throw(NullArgumentError);
+    });
+
+    it('throws type constraint error if given string.', () => {
+      expect(() => numberAssert.equals('123')).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if given list.', () => {
+      expect(() => numberAssert.equals([])).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if given object.', () => {
+      expect(() => numberAssert.equals({})).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if given function.', () => {
+      expect(() => numberAssert.equals(() => {})).to.throw(TypeConstraintError);
+    });
+
+    it('throws illegal argument error if given value is greater than the reference value', () => {
+      expect(() => numberAssert.equals(reference + 1)).to.throw(IllegalArgumentError);
+    });
+
+    it('throws illegal argument error if given value is lower than reference value', () => {
+      expect(() => numberAssert.equals(reference - 1)).to.throw(IllegalArgumentError);
+    });
+
+    it('returns a number assert if given a number which is equal to the reference value', () => {
+      expect(numberAssert.equals(reference)).to.be.instanceof(NumberAssert);
+    });
+  });
 });

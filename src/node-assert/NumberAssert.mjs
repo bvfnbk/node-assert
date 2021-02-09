@@ -30,6 +30,15 @@ class NumberAssert {
     return this;
   }
 
+  equals(other) {
+    Assert.that(other).isNotNull();
+    NumberAssert.assertIsNumber(other);
+    if (this.value !== other) {
+      throw new IllegalArgumentError();
+    }
+    return this;
+  }
+
   static assertIsNumber(value) {
     if (typeof value !== 'number') {
       throw new TypeConstraintError();
