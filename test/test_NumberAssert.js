@@ -237,4 +237,85 @@ describe('NumberAssert', () => {
       expect(numberAssert.equals(reference)).to.be.instanceof(NumberAssert);
     });
   });
+
+  describe('isInRange()', () => {
+    let reference = 100;
+    let numberAssert = Assert.that(reference).isNumber();
+    it('throws undefined argument error if lower boundary is given undefined.', () => {
+      expect(() => numberAssert.isInRange(undefined, 123)).to.throw(UndefinedArgumentError);
+    });
+
+    it('throws undefined argument error if upper boundary is not defined.', () => {
+      expect(() => numberAssert.isInRange(reference - 1)).to.throw(UndefinedArgumentError);
+    });
+
+    it('throws undefined argument error if upper boundary is given undefined.', () => {
+      expect(() => numberAssert.isInRange(reference - 1, undefined)).to.throw(UndefinedArgumentError);
+    });
+
+    it('throws null argument error if lower given null.', () => {
+      expect(() => numberAssert.isInRange(null, reference + 1)).to.throw(NullArgumentError);
+    });
+
+    it('throws null argument error if upper given null.', () => {
+      expect(() => numberAssert.isInRange(reference - 1, null)).to.throw(NullArgumentError);
+    });
+
+    it('throws type constraint error if lower given string.', () => {
+      expect(() => numberAssert.isInRange('123', reference + 1)).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if upper given string.', () => {
+      expect(() => numberAssert.isInRange(reference - 1, '123')).to.throw(TypeConstraintError);
+    });
+
+
+    it('throws type constraint error if lower given list.', () => {
+      expect(() => numberAssert.isInRange([], reference + 1)).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if upper given list.', () => {
+      expect(() => numberAssert.isInRange(reference - 1, [])).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if lower given object.', () => {
+      expect(() => numberAssert.isInRange({}, reference + 1)).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if upper given object.', () => {
+      expect(() => numberAssert.isInRange(reference - 1, {})).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if lower given function.', () => {
+      expect(() => numberAssert.isInRange(() => {
+      }, reference + 1)).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if upper given function.', () => {
+      expect(() => numberAssert.isInRange(reference - 1, () => {
+      })).to.throw(TypeConstraintError);
+    });
+
+    it('throws illegal argument error if given value is greater than the upper boundary', () => {
+      expect(() => numberAssert.isInRange(reference - 3, reference - 1)).to.throw(IllegalArgumentError);
+    });
+
+    it('throws illegal argument error if given value is lower than reference value', () => {
+      expect(() => numberAssert.isInRange(reference + 1, reference + 3)).to.throw(IllegalArgumentError);
+    });
+
+    // valie:
+
+    it('returns a number assert if given a number which is in the given range', () => {
+      expect(numberAssert.isInRange(reference - 1, reference + 1)).to.be.instanceof(NumberAssert);
+    });
+
+    it('returns a number assert if given a number which corresponds to the lower boundary', () => {
+      expect(numberAssert.isInRange(reference, reference + 1)).to.be.instanceof(NumberAssert);
+    });
+
+    it('returns a number assert if given a number which corresponds to the upper boundary', () => {
+      expect(numberAssert.isInRange(reference - 1, reference)).to.be.instanceof(NumberAssert);
+    });
+  });
 });

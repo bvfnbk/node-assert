@@ -95,6 +95,31 @@ class NumberAssert {
   }
 
   /**
+   * Asserts that the other value is in the given range (including the boundaries). It runs
+   *
+   * ```javascript
+   * isGreaterThanOrEquals(lower);
+   * isLowerThanOrEquals(upper);
+   * ```
+   *
+   * **Please note:** the lower bound is checked first. Thus, an undefined or `null` value for the upper bound may not
+   * be detected if the check for the upper bound fails.
+   *
+   * @param {number} lower The lower boundary (inclusive)
+   * @param {number} upper The upper boundary (inclusive).
+   * @returns {NumberAssert} the current instance.
+   * @throws {IllegalArgumentError} if the reference value is lower than the `lower` bound, or greater than the `upper` bound.
+   * @throws {UndefinedArgumentError} if `lower` or `upper` is not defined.
+   * @throws {NullArgumentError} if `lower` or `upper` value is `null`.
+   * @throws {TypeConstraintError} if `lower` or `upper` is no number.
+   */
+  isInRange(lower, upper) {
+    this.isGreaterThanOrEquals(lower);
+    this.isLowerThanOrEquals(upper);
+    return this;
+  }
+
+  /**
    * Comparison callback
    *
    * @callback NumberAssert~comparisonFunction
