@@ -1,5 +1,6 @@
 import {NullArgumentError, UndefinedArgumentError} from './error/index.mjs';
 import StringAssert from './StringAssert.mjs';
+import NumberAssert from './NumberAssert.mjs';
 
 /**
  * A generic assert. Provides methods to assert common properties, like whether a value is defined or `null`.
@@ -58,6 +59,11 @@ class GenericAssert {
   isString() {
     this.isNotNull();
     return new StringAssert(this.value);
+  }
+
+  isNumber() {
+    this.isNotNull();
+    return new NumberAssert(this.value);
   }
 }
 

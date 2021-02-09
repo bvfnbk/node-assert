@@ -1,6 +1,6 @@
 import mocha from 'mocha';
 import chai from 'chai';
-import {Assert, GenericAssert, StringAssert} from '../src/node-assert/index.mjs';
+import {Assert, GenericAssert, NumberAssert, StringAssert} from '../src/node-assert/index.mjs';
 import {NullArgumentError, TypeConstraintError, UndefinedArgumentError} from '../src/node-assert/error/index.mjs';
 
 
@@ -86,9 +86,52 @@ describe('GenericAssert', () => {
       expect(() => genericAssert.isString()).to.throw(TypeConstraintError);
     });
 
-    it('returns a isString assert if it succeeds.', () => {
+    it('returns a string assert if it succeeds.', () => {
       let genericAssert = Assert.that('value');
       expect(genericAssert.isString()).to.be.instanceof(StringAssert);
+    });
+  });
+
+  describe('isNumber()', () => {
+    it('throws undefined argument error if given an undefined value.', () => {
+      let genericAssert = Assert.that();
+      expect(() => genericAssert.isNumber()).to.throw(UndefinedArgumentError);
+    });
+
+    it('throws undefined argument error if given undefined.', () => {
+      let genericAssert = Assert.that(undefined);
+      expect(() => genericAssert.isNumber()).to.throw(UndefinedArgumentError);
+    });
+
+    it('throws null argument error if given null.', () => {
+      let genericAssert = Assert.that(null);
+      expect(() => genericAssert.isNumber()).to.throw(NullArgumentError);
+    });
+
+    it('throws type constraint error if given string.', () => {
+      let genericAssert = Assert.that('123');
+      expect(() => genericAssert.isNumber()).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if given list.', () => {
+      let genericAssert = Assert.that([]);
+      expect(() => genericAssert.isNumber()).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if given object.', () => {
+      let genericAssert = Assert.that({});
+      expect(() => genericAssert.isNumber()).to.throw(TypeConstraintError);
+    });
+
+    it('throws type constraint error if given function.', () => {
+      let genericAssert = Assert.that(() => {
+      });
+      expect(() => genericAssert.isNumber()).to.throw(TypeConstraintError);
+    });
+
+    it('returns a number assert if it succeeds.', () => {
+      let genericAssert = Assert.that(123);
+      expect(genericAssert.isNumber()).to.be.instanceof(NumberAssert);
     });
   });
 });
