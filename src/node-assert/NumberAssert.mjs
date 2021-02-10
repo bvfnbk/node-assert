@@ -11,6 +11,8 @@ class NumberAssert {
    *
    * @param {module:core} core the core module providing all assert functions.
    * @param {number} value The reference value. May be anything.
+   * @throws {UndefinedArgumentError} if given value is not defined.
+   * @throws {NullArgumentError} if given value is `null`.
    * @throws {TypeConstraintError} if given value is no `number`.
    */
   constructor(core, value) {
