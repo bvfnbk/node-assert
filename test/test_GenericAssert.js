@@ -11,10 +11,11 @@ const expect = chai.expect;
 
 describe('GenericAssert', () => {
   const mockCore = {
-    assertDefined : sinon.spy(),
-    assertNotNull : sinon.spy(),
-    assertString : sinon.spy(),
-    assertNumber: sinon.spy()
+    assertDefined: sinon.spy(),
+    assertNotNull: sinon.spy(),
+    assertString: sinon.spy(),
+    assertNumber: sinon.spy(),
+    assertList: sinon.spy()
   };
 
   describe('Generic delegates calls to core module functions...', () => {
@@ -22,7 +23,7 @@ describe('GenericAssert', () => {
     let reference = 123;
     const generic = new GenericAssert(mockCore, reference);
 
-    it ('isDefined()', () => {
+    it('isDefined()', () => {
       // When
       generic.isDefined();
 
@@ -30,7 +31,7 @@ describe('GenericAssert', () => {
       expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
     });
 
-    it ('isNotNull()', () => {
+    it('isNotNull()', () => {
       // When
       generic.isNotNull();
 
@@ -39,7 +40,7 @@ describe('GenericAssert', () => {
       expect(mockCore.assertNotNull.calledWith(reference)).to.be.true;
     });
 
-    it ('isString()', () => {
+    it('isString()', () => {
       // When
       generic.isString();
 
@@ -49,7 +50,7 @@ describe('GenericAssert', () => {
       expect(mockCore.assertString.calledWith(reference)).to.be.true;
     });
 
-    it ('isNumber()', () => {
+    it('isNumber()', () => {
       // When
       generic.isNumber();
 
@@ -57,6 +58,16 @@ describe('GenericAssert', () => {
       expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
       expect(mockCore.assertNotNull.calledWith(reference)).to.be.true;
       expect(mockCore.assertNumber.calledWith(reference)).to.be.true;
+    });
+
+    it('isList()', () => {
+      // When
+      generic.isList();
+
+      // Then
+      expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
+      expect(mockCore.assertNotNull.calledWith(reference)).to.be.true;
+      expect(mockCore.assertList.calledWith(reference)).to.be.true;
     });
   });
 });
