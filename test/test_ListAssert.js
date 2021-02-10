@@ -3,6 +3,7 @@ import chai from 'chai';
 import {ListAssert, NumberAssert} from '../src/node-assert/index.mjs';
 import {core} from './mocks.js';
 import {IllegalArgumentError} from '../src/node-assert/error/index.mjs';
+import sinon from 'sinon';
 
 
 const describe = mocha.describe;
@@ -10,7 +11,6 @@ const it = mocha.it;
 const expect = chai.expect;
 
 describe('ListAssert', () => {
-
   it('Constructor asserts type.', () => {
     // When
     new ListAssert(core, []);
@@ -70,6 +70,37 @@ describe('ListAssert', () => {
 
       // When/Then
       expect(() => systemUnderTest.isNotEmpty()).to.throw(IllegalArgumentError);
+    });
+  });
+
+  describe('contains()', () => {
+    it('returns a list assert if a non-empty list is checked for an existing element', () => {
+      // Given
+      const systemUnderTest = new ListAssert(core, [1,2,3]);
+
+      // When
+      const actual = systemUnderTest.contains(item => item === 2);
+
+      // Then
+      expect(actual).to.be.instanceof(ListAssert);
+    });
+
+    it('throws illegal argument error when an empty list is checked.', () => {
+      // Given
+      const systemUnderTest = new ListAssert(core, []);
+      const predicate = sinon.spy();
+
+      // When/Then
+      expect(() => systemUnderTest.contains(predicate)).to.throw(IllegalArgumentError);
+      expect(predicate.notCalled);
+    });
+
+    it('throws illegal argument error when a non-empty list is checked for an element which is not contained.', () => {
+      // Given
+      const systemUnderTest = new ListAssert(core, [1,2,3]);
+
+      // When/Then
+      expect(() => systemUnderTest.contains(item => item === 4)).to.throw(IllegalArgumentError);
     });
   });
 });
