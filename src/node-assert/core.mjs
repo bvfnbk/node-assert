@@ -63,9 +63,30 @@ function assertNumber(value) {
   }
 }
 
+/**
+ * Assert given value is a list.
+ *
+ * @param {any[]} value The value to assert.
+ */
+function assertList(value) {
+  assertNotNull(value);
+  let isArray;
+
+  if (typeof Array.isArray === 'undefined') {
+    isArray = (argument) => Object.prototype.toString.call(argument) === '[object Array]';
+  } else {
+    isArray = (argument) => Array.isArray(argument);
+  }
+  if (!isArray(value)) {
+    throw new TypeConstraintError();
+  }
+  return this;
+}
+
 export {
   assertDefined,
   assertNotNull,
   assertString,
-  assertNumber
+  assertNumber,
+  assertList
 };
