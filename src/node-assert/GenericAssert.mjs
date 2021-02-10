@@ -1,4 +1,3 @@
-import {NullArgumentError, UndefinedArgumentError} from './error/index.mjs';
 import StringAssert from './StringAssert.mjs';
 import NumberAssert from './NumberAssert.mjs';
 
@@ -11,9 +10,11 @@ class GenericAssert {
   /**
    * Creates a generic assert.
    *
+   * @param {module:core} core the core module providing all assert functions.
    * @param {*} value The value to wrap. May be anything.
    */
-  constructor(value) {
+  constructor(core, value) {
+    this.core = core;
     this.value = value;
   }
 
@@ -24,9 +25,7 @@ class GenericAssert {
    * @throws {UndefinedArgumentError} if the contained value is not defined.
    */
   isDefined() {
-    if (typeof this.value === 'undefined') {
-      throw new UndefinedArgumentError();
-    }
+    this.core.assertDefined(this.value);
     return this;
   }
 
@@ -38,32 +37,34 @@ class GenericAssert {
    * @throws {NullArgumentError} if the contained value is `null`.
    */
   isNotNull() {
-    this.isDefined();
-    if (this.value === null) {
-      throw new NullArgumentError();
-    }
+    this.core.assertNotNull(this.value);
     return this;
   }
 
   /**
-   * Asserts wrapped value is a `string`
+   * Asserts wrapped value is a string.
    *
-   * **Please note:** This method asserts that the value is not `null`, the type assertion is performed in the
-   * constructor {@link StringAssert}
-   *
-   * @returns {StringAssert} A `string`-specific assert (to continue validation).
+   * @returns {StringAssert} A string-specific assert (to continue validation).
    * @throws {UndefinedArgumentError} if the contained value is not defined.
    * @throws {NullArgumentError} if the contained value is `null`
-   * @throws {TypeConstraintError} if the contained value is no `string`
+   * @throws {TypeConstraintError} if the contained value is no string.
    */
   isString() {
-    this.isNotNull();
-    return new StringAssert(this.value);
+    this.core.assertString(this.value);
+    return new StringAssert(this.core, this.value);
   }
 
+  /**
+   * Asserts wrapped value is a number.
+   *
+   * @returns {NumberAssert} A number-specific assert (to continue validation).
+   * @throws {UndefinedArgumentError} if the contained value is not defined.
+   * @throws {NullArgumentError} if the contained value is `null`
+   * @throws {TypeConstraintError} if the contained value is no number.
+   */
   isNumber() {
-    this.isNotNull();
-    return new NumberAssert(this.value);
+    this.core.assertNumber(this.value);
+    return new NumberAssert(this.core, this.value);
   }
 }
 

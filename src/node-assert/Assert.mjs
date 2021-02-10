@@ -1,5 +1,6 @@
 import GenericAssert from './GenericAssert.mjs';
 
+import * as core from './core.mjs';
 
 /**
  * Static factory creating the entry point of the fluent assert.
@@ -14,7 +15,7 @@ class Assert {
    * @returns {GenericAssert} a generic assert wrapping the given <code>value</code>
    */
   static that(value) {
-    return new GenericAssert(value);
+    return new GenericAssert(core, value);
   }
 }
 

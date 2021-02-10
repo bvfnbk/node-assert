@@ -1,4 +1,4 @@
-import {IllegalArgumentError, TypeConstraintError} from './error/index.mjs';
+import {IllegalArgumentError} from './error/index.mjs';
 
 /**
  * A `string` assert providing methods specific to the validation of strings.
@@ -9,13 +9,13 @@ class StringAssert {
   /**
    * Asserts that the type of the given `value` is `string`.
    *
+   * @param {module:core} core the core module providing all assert functions.
    * @param {string} value The value to wrap.
    * @throws {TypeConstraintError} if given value is no `string`.
    */
-  constructor(value) {
-    if (typeof value !== 'string') {
-      throw new TypeConstraintError();
-    }
+  constructor(core, value) {
+    core.assertString(value);
+    this.core = core;
     this.value = value;
   }
 
