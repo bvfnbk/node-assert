@@ -1,6 +1,6 @@
 import mocha from 'mocha';
 import chai from 'chai';
-import {ListAssert} from '../src/node-assert/index.mjs';
+import {ListAssert, NumberAssert} from '../src/node-assert/index.mjs';
 import {core} from './mocks.js';
 import {IllegalArgumentError} from '../src/node-assert/error/index.mjs';
 
@@ -17,6 +17,18 @@ describe('ListAssert', () => {
 
     // Then
     expect(core.assertList.calledWith([])).to.be.true;
+  });
+
+  it('size() returns a number assert', () => {
+    // Please cf. ./test_NumberAssert.js for test details.
+    // Given
+    const systemUnderTest = new ListAssert(core, []);
+
+    // When
+    const actual = systemUnderTest.size();
+
+    // Then
+    expect(actual).to.be.instanceof(NumberAssert);
   });
 
   describe('isEmpty()', () => {

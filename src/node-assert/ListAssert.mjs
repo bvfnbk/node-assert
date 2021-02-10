@@ -1,10 +1,11 @@
+import {IllegalArgumentError} from './error/index.mjs';
+import NumberAssert from './NumberAssert.mjs';
+
 /**
  * A list assert providing list-specific validation methods.
  *
  * @author bvfnbk
  */
-import {IllegalArgumentError} from './error/index.mjs';
-
 class ListAssert {
   /**
    * Creates a number assert.
@@ -48,6 +49,14 @@ class ListAssert {
     return this;
   }
 
+  /**
+   * Returns a {NumberAssert} in order to make more elaborate assertions about the size of the list.
+   *
+   * @return {NumberAssert} A {NumberAssert} wrapping the length of the wrapped list.
+   */
+  size() {
+    return new NumberAssert(this.core, this.value.length);
+  }
 }
 
 export default ListAssert;
