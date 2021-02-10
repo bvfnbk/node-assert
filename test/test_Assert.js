@@ -11,7 +11,7 @@ const expect = chai.expect;
 describe('Assert', () => {
   describe('that()', () => {
     it('returns a generic assert instance', () => {
-      expect(Assert.that()).to.be.an.instanceof(GenericAssert);
+      expect(Assert.that(123)).to.be.an.instanceof(GenericAssert);
     });
   });
 });

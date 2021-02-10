@@ -1,321 +1,206 @@
 import mocha from 'mocha';
 import chai from 'chai';
-import {Assert, NumberAssert} from '../src/node-assert/index.mjs';
-import {
-  IllegalArgumentError,
-  NullArgumentError,
-  TypeConstraintError,
-  UndefinedArgumentError
-} from '../src/node-assert/error/index.mjs';
+import sinon from 'sinon';
+import {NumberAssert} from '../src/node-assert/index.mjs';
+import {IllegalArgumentError} from '../src/node-assert/error/index.mjs';
 
 const describe = mocha.describe;
 const it = mocha.it;
 const expect = chai.expect;
 
 describe('NumberAssert', () => {
+  const mockCore = {
+    assertDefined: sinon.spy(),
+    assertNotNull: sinon.spy(),
+    assertString: sinon.spy(),
+    assertNumber: sinon.spy()
+  };
+
+  it('Constructor asserts type.', () => {
+    // When
+    new NumberAssert(mockCore, 100);
+
+    // Then
+    expect(mockCore.assertNumber.calledWith(100)).to.be.true;
+  });
+
   describe('isGreaterThan()', () => {
-    let reference = 100;
-    let numberAssert = Assert.that(reference).isNumber();
-    it('throws undefined argument error if given an undefined value.', () => {
-      expect(() => numberAssert.isGreaterThan()).to.throw(UndefinedArgumentError);
+    it('returns a number assert for 100 > 50', () => {
+      // Given
+      const systemUnderTest = new NumberAssert(mockCore, 100);
+
+      // When
+      const result = systemUnderTest.isGreaterThan(50);
+
+      // Then
+      expect(result).to.be.instanceof(NumberAssert);
+      expect(mockCore.assertNumber.calledWith(50)).to.be.true;
     });
 
-    it('throws undefined argument error if given undefined.', () => {
-      expect(() => numberAssert.isGreaterThan(undefined)).to.throw(UndefinedArgumentError);
-    });
+    [
+      [200, 100],
+      [100, 100]
+    ].forEach(parameters => {
+      const [comparisonValue, reference] = parameters;
+      it(`throws an illegal argument error for ${reference} > ${comparisonValue} `, () => {
+        const systemUnderTest = new NumberAssert(mockCore, reference);
 
-    it('throws null argument error if given null.', () => {
-      expect(() => numberAssert.isGreaterThan(null)).to.throw(NullArgumentError);
-    });
-
-    it('throws type constraint error if given string.', () => {
-      expect(() => numberAssert.isGreaterThan('123')).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given list.', () => {
-      expect(() => numberAssert.isGreaterThan([])).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given object.', () => {
-      expect(() => numberAssert.isGreaterThan({})).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given function.', () => {
-      expect(() => numberAssert.isGreaterThan(() => {
-      })).to.throw(TypeConstraintError);
-    });
-
-    it('throws illegal argument error if given value is equal to reference value', () => {
-      expect(() => numberAssert.isGreaterThan(reference)).to.throw(IllegalArgumentError);
-    });
-
-    it('throws illegal argument error if given value is greater than reference value', () => {
-      expect(() => numberAssert.isGreaterThan(reference + 1)).to.throw(IllegalArgumentError);
-    });
-
-    it('returns a number assert if given a number which is smaller than the reference value', () => {
-      expect(numberAssert.isGreaterThan(reference - 1)).to.be.instanceof(NumberAssert);
+        // When/Then
+        expect(() => systemUnderTest.isGreaterThan(comparisonValue)).to.throw(IllegalArgumentError);
+        expect(mockCore.assertNumber.calledWith(comparisonValue)).to.be.true;
+      });
     });
   });
 
   describe('isGreaterThanOrEquals()', () => {
-    let reference = 100;
-    let numberAssert = Assert.that(reference).isNumber();
-    it('throws undefined argument error if given an undefined value.', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals()).to.throw(UndefinedArgumentError);
+    [
+      [50, 100],
+      [100, 100]
+    ].forEach(parameters => {
+      const [comparisonValue, reference] = parameters;
+      it(`returns a number assert for ${reference} >= ${comparisonValue}`, () => {
+        // Given
+        const systemUnderTest = new NumberAssert(mockCore, reference);
+
+        // When
+        const result = systemUnderTest.isGreaterThanOrEquals(comparisonValue);
+
+        // Then
+        expect(result).to.be.instanceof(NumberAssert);
+        expect(mockCore.assertNumber.calledWith(comparisonValue)).to.be.true;
+      });
     });
 
-    it('throws undefined argument error if given undefined.', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals(undefined)).to.throw(UndefinedArgumentError);
-    });
+    it('throws an illegal argument error for 100 > 200', () => {
+      const systemUnderTest = new NumberAssert(mockCore, 100);
 
-    it('throws null argument error if given null.', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals(null)).to.throw(NullArgumentError);
-    });
-
-    it('throws type constraint error if given string.', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals('123')).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given list.', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals([])).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given object.', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals({})).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given function.', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals(() => {
-      })).to.throw(TypeConstraintError);
-    });
-
-    it('throws illegal argument error if given value is greater than reference value', () => {
-      expect(() => numberAssert.isGreaterThanOrEquals(reference + 1)).to.throw(IllegalArgumentError);
-    });
-
-    it('returns a number assert if given a number which is smaller than the reference value', () => {
-      expect(numberAssert.isGreaterThanOrEquals(reference - 1)).to.be.instanceof(NumberAssert);
-    });
-
-    it('returns a number assert if given a number which is equals to the reference value', () => {
-      expect(numberAssert.isGreaterThanOrEquals(reference)).to.be.instanceof(NumberAssert);
+      // When/Then
+      expect(() => systemUnderTest.isGreaterThanOrEquals(200)).to.throw(IllegalArgumentError);
+      expect(mockCore.assertNumber.calledWith(200)).to.be.true;
     });
   });
 
   describe('isLowerThan()', () => {
-    let reference = 100;
-    let numberAssert = Assert.that(reference).isNumber();
-    it('throws undefined argument error if given an undefined value.', () => {
-      expect(() => numberAssert.isLowerThan()).to.throw(UndefinedArgumentError);
+    it('returns a number assert for 100 < 200', () => {
+      // Given
+      const systemUnderTest = new NumberAssert(mockCore, 100);
+
+      // When
+      const result = systemUnderTest.isLowerThan(200);
+
+      // Then
+      expect(result).to.be.instanceof(NumberAssert);
+      expect(mockCore.assertNumber.calledWith(200)).to.be.true;
     });
 
-    it('throws undefined argument error if given undefined.', () => {
-      expect(() => numberAssert.isLowerThan(undefined)).to.throw(UndefinedArgumentError);
-    });
+    [
+      [50, 100],
+      [100, 100]
+    ].forEach(parameters => {
+      const [comparisonValue, reference] = parameters;
+      it(`throws an illegal argument error for ${reference} < ${comparisonValue}`, () => {
+        const systemUnderTest = new NumberAssert(mockCore, reference);
 
-    it('throws null argument error if given null.', () => {
-      expect(() => numberAssert.isLowerThan(null)).to.throw(NullArgumentError);
-    });
-
-    it('throws type constraint error if given string.', () => {
-      expect(() => numberAssert.isLowerThan('123')).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given list.', () => {
-      expect(() => numberAssert.isLowerThan([])).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given object.', () => {
-      expect(() => numberAssert.isLowerThan({})).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given function.', () => {
-      expect(() => numberAssert.isLowerThan(() => {
-      })).to.throw(TypeConstraintError);
-    });
-
-    it('throws illegal argument error if given value is equal to reference value', () => {
-      expect(() => numberAssert.isLowerThan(reference)).to.throw(IllegalArgumentError);
-    });
-
-    it('throws illegal argument error if given value is lower than reference value', () => {
-      expect(() => numberAssert.isLowerThan(reference - 1)).to.throw(IllegalArgumentError);
-    });
-
-    it('returns a number assert if given a number which is greater than the reference value', () => {
-      expect(numberAssert.isLowerThan(reference + 1)).to.be.instanceof(NumberAssert);
+        // When/Then
+        expect(() => systemUnderTest.isLowerThan(comparisonValue)).to.throw(IllegalArgumentError);
+        expect(mockCore.assertNumber.calledWith(comparisonValue)).to.be.true;
+      });
     });
   });
 
   describe('isLowerThanOrEquals()', () => {
-    let reference = 100;
-    let numberAssert = Assert.that(reference).isNumber();
-    it('throws undefined argument error if given an undefined value.', () => {
-      expect(() => numberAssert.isLowerThanOrEquals()).to.throw(UndefinedArgumentError);
+    [
+      [200, 100],
+      [100, 100]
+    ].forEach(parameters => {
+      const [comparisonValue, reference] = parameters;
+      it(`returns a number assert for ${reference} <= ${comparisonValue}`, () => {
+        // Given
+        const systemUnderTest = new NumberAssert(mockCore, reference);
+
+        // When
+        const result = systemUnderTest.isLowerThanOrEquals(comparisonValue);
+
+        // Then
+        expect(result).to.be.instanceof(NumberAssert);
+        expect(mockCore.assertNumber.calledWith(comparisonValue)).to.be.true;
+      });
+
     });
 
-    it('throws undefined argument error if given undefined.', () => {
-      expect(() => numberAssert.isLowerThanOrEquals(undefined)).to.throw(UndefinedArgumentError);
-    });
+    it('throws an illegal argument error for 100 <= 50', () => {
+      const systemUnderTest = new NumberAssert(mockCore, 100);
 
-    it('throws null argument error if given null.', () => {
-      expect(() => numberAssert.isLowerThanOrEquals(null)).to.throw(NullArgumentError);
-    });
-
-    it('throws type constraint error if given string.', () => {
-      expect(() => numberAssert.isLowerThanOrEquals('123')).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given list.', () => {
-      expect(() => numberAssert.isLowerThanOrEquals([])).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given object.', () => {
-      expect(() => numberAssert.isLowerThanOrEquals({})).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given function.', () => {
-      expect(() => numberAssert.isLowerThanOrEquals(() => {
-      })).to.throw(TypeConstraintError);
-    });
-
-    it('throws illegal argument error if given value is lower than reference value', () => {
-      expect(() => numberAssert.isLowerThanOrEquals(reference - 1)).to.throw(IllegalArgumentError);
-    });
-
-    it('returns a number assert if given a number which is equal to the reference value', () => {
-      expect(numberAssert.isLowerThanOrEquals(reference)).to.be.instanceof(NumberAssert);
-    });
-
-    it('returns a number assert if given a number which is greater than the reference value', () => {
-      expect(numberAssert.isLowerThanOrEquals(reference + 1)).to.be.instanceof(NumberAssert);
+      // When/Then
+      expect(() => systemUnderTest.isLowerThanOrEquals(50)).to.throw(IllegalArgumentError);
+      expect(mockCore.assertNumber.calledWith(50)).to.be.true;
     });
   });
 
-  describe('equals()', () => {
-    let reference = 100;
-    let numberAssert = Assert.that(reference).isNumber();
-    it('throws undefined argument error if given an undefined value.', () => {
-      expect(() => numberAssert.equals()).to.throw(UndefinedArgumentError);
+  describe('isEqual()', () => {
+    it('returns a number assert for 100 === 100', () => {
+      // Given
+      const systemUnderTest = new NumberAssert(mockCore, 100);
+
+      // When
+      const result = systemUnderTest.equals(100);
+
+      // Then
+      expect(result).to.be.instanceof(NumberAssert);
+      expect(mockCore.assertNumber.calledWith(100)).to.be.true;
     });
 
-    it('throws undefined argument error if given undefined.', () => {
-      expect(() => numberAssert.equals(undefined)).to.throw(UndefinedArgumentError);
-    });
+    [
+      [50, 100],
+      [200, 100]
+    ].forEach(parameters => {
+      const [comparisonValue, reference] = parameters;
+      it(`throws an illegal argument error for ${reference} !== ${comparisonValue}`, () => {
+        const systemUnderTest = new NumberAssert(mockCore, reference);
 
-    it('throws null argument error if given null.', () => {
-      expect(() => numberAssert.equals(null)).to.throw(NullArgumentError);
-    });
+        // When/Then
+        expect(() => systemUnderTest.equals(comparisonValue)).to.throw(IllegalArgumentError);
+        expect(mockCore.assertNumber.calledWith(comparisonValue)).to.be.true;
 
-    it('throws type constraint error if given string.', () => {
-      expect(() => numberAssert.equals('123')).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given list.', () => {
-      expect(() => numberAssert.equals([])).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given object.', () => {
-      expect(() => numberAssert.equals({})).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if given function.', () => {
-      expect(() => numberAssert.equals(() => {
-      })).to.throw(TypeConstraintError);
-    });
-
-    it('throws illegal argument error if given value is greater than the reference value', () => {
-      expect(() => numberAssert.equals(reference + 1)).to.throw(IllegalArgumentError);
-    });
-
-    it('throws illegal argument error if given value is lower than reference value', () => {
-      expect(() => numberAssert.equals(reference - 1)).to.throw(IllegalArgumentError);
-    });
-
-    it('returns a number assert if given a number which is equal to the reference value', () => {
-      expect(numberAssert.equals(reference)).to.be.instanceof(NumberAssert);
+      });
     });
   });
 
   describe('isInRange()', () => {
-    let reference = 100;
-    let numberAssert = Assert.that(reference).isNumber();
-    it('throws undefined argument error if lower boundary is given undefined.', () => {
-      expect(() => numberAssert.isInRange(undefined, 123)).to.throw(UndefinedArgumentError);
+    [
+      [50, 100, 200],
+      [50, 50, 200],
+      [50, 200, 200]
+    ].forEach(parameter => {
+      const [lower, reference, upper] = parameter;
+      it(`returns a number assert for ${lower} <= ${reference} <= ${upper}`, () => {
+        // Given
+        const systemUnderTest = new NumberAssert(mockCore, reference);
+
+        // When
+        const result = systemUnderTest.isInRange(lower, upper);
+
+        // Then
+        expect(result).to.be.instanceof(NumberAssert);
+        expect(mockCore.assertNumber.calledWith(lower)).to.be.true;
+        expect(mockCore.assertNumber.calledWith(upper)).to.be.true;
+      });
     });
 
-    it('throws undefined argument error if upper boundary is not defined.', () => {
-      expect(() => numberAssert.isInRange(reference - 1)).to.throw(UndefinedArgumentError);
-    });
+    [
+      [50, 0, 200], // < lower
+      [50, 400, 200], // > upper
+      [200, 100, 50] // lower > upper
+    ].forEach(parameter => {
+      const [lower, reference, upper] = parameter;
+      it(`throws an illegal argument error for lower bound ${lower}, reference ${reference} and upper bound ${upper}`, () => {
+        const systemUnderTest = new NumberAssert(mockCore, reference);
 
-    it('throws undefined argument error if upper boundary is given undefined.', () => {
-      expect(() => numberAssert.isInRange(reference - 1, undefined)).to.throw(UndefinedArgumentError);
-    });
-
-    it('throws null argument error if lower given null.', () => {
-      expect(() => numberAssert.isInRange(null, reference + 1)).to.throw(NullArgumentError);
-    });
-
-    it('throws null argument error if upper given null.', () => {
-      expect(() => numberAssert.isInRange(reference - 1, null)).to.throw(NullArgumentError);
-    });
-
-    it('throws type constraint error if lower given string.', () => {
-      expect(() => numberAssert.isInRange('123', reference + 1)).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if upper given string.', () => {
-      expect(() => numberAssert.isInRange(reference - 1, '123')).to.throw(TypeConstraintError);
-    });
-
-
-    it('throws type constraint error if lower given list.', () => {
-      expect(() => numberAssert.isInRange([], reference + 1)).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if upper given list.', () => {
-      expect(() => numberAssert.isInRange(reference - 1, [])).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if lower given object.', () => {
-      expect(() => numberAssert.isInRange({}, reference + 1)).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if upper given object.', () => {
-      expect(() => numberAssert.isInRange(reference - 1, {})).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if lower given function.', () => {
-      expect(() => numberAssert.isInRange(() => {
-      }, reference + 1)).to.throw(TypeConstraintError);
-    });
-
-    it('throws type constraint error if upper given function.', () => {
-      expect(() => numberAssert.isInRange(reference - 1, () => {
-      })).to.throw(TypeConstraintError);
-    });
-
-    it('throws illegal argument error if given value is greater than the upper boundary', () => {
-      expect(() => numberAssert.isInRange(reference - 3, reference - 1)).to.throw(IllegalArgumentError);
-    });
-
-    it('throws illegal argument error if given value is lower than reference value', () => {
-      expect(() => numberAssert.isInRange(reference + 1, reference + 3)).to.throw(IllegalArgumentError);
-    });
-
-    // valie:
-
-    it('returns a number assert if given a number which is in the given range', () => {
-      expect(numberAssert.isInRange(reference - 1, reference + 1)).to.be.instanceof(NumberAssert);
-    });
-
-    it('returns a number assert if given a number which corresponds to the lower boundary', () => {
-      expect(numberAssert.isInRange(reference, reference + 1)).to.be.instanceof(NumberAssert);
-    });
-
-    it('returns a number assert if given a number which corresponds to the upper boundary', () => {
-      expect(numberAssert.isInRange(reference - 1, reference)).to.be.instanceof(NumberAssert);
+        // When/Then
+        expect(() => systemUnderTest.isInRange(lower, upper)).to.throw(IllegalArgumentError);
+        expect(mockCore.assertNumber.calledWith(lower)).to.be.true;
+        expect(mockCore.assertNumber.calledWith(upper)).to.be.true;
+      });
     });
   });
 });
