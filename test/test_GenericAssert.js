@@ -1,7 +1,7 @@
 import mocha from 'mocha';
 import chai from 'chai';
 import {GenericAssert} from '../src/node-assert/index.mjs';
-import sinon from 'sinon';
+import {core} from './mocks.js';
 
 
 const describe = mocha.describe;
@@ -10,25 +10,17 @@ const expect = chai.expect;
 
 
 describe('GenericAssert', () => {
-  const mockCore = {
-    assertDefined: sinon.spy(),
-    assertNotNull: sinon.spy(),
-    assertString: sinon.spy(),
-    assertNumber: sinon.spy(),
-    assertList: sinon.spy()
-  };
-
   describe('Generic delegates calls to core module functions...', () => {
     // Given
     let reference = 123;
-    const generic = new GenericAssert(mockCore, reference);
+    const generic = new GenericAssert(core, reference);
 
     it('isDefined()', () => {
       // When
       generic.isDefined();
 
       // Then
-      expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
+      expect(core.assertDefined.calledWith(reference)).to.be.true;
     });
 
     it('isNotNull()', () => {
@@ -36,8 +28,8 @@ describe('GenericAssert', () => {
       generic.isNotNull();
 
       // Then
-      expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
-      expect(mockCore.assertNotNull.calledWith(reference)).to.be.true;
+      expect(core.assertDefined.calledWith(reference)).to.be.true;
+      expect(core.assertNotNull.calledWith(reference)).to.be.true;
     });
 
     it('isString()', () => {
@@ -45,9 +37,9 @@ describe('GenericAssert', () => {
       generic.isString();
 
       // Then
-      expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
-      expect(mockCore.assertNotNull.calledWith(reference)).to.be.true;
-      expect(mockCore.assertString.calledWith(reference)).to.be.true;
+      expect(core.assertDefined.calledWith(reference)).to.be.true;
+      expect(core.assertNotNull.calledWith(reference)).to.be.true;
+      expect(core.assertString.calledWith(reference)).to.be.true;
     });
 
     it('isNumber()', () => {
@@ -55,9 +47,9 @@ describe('GenericAssert', () => {
       generic.isNumber();
 
       // Then
-      expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
-      expect(mockCore.assertNotNull.calledWith(reference)).to.be.true;
-      expect(mockCore.assertNumber.calledWith(reference)).to.be.true;
+      expect(core.assertDefined.calledWith(reference)).to.be.true;
+      expect(core.assertNotNull.calledWith(reference)).to.be.true;
+      expect(core.assertNumber.calledWith(reference)).to.be.true;
     });
 
     it('isList()', () => {
@@ -65,9 +57,9 @@ describe('GenericAssert', () => {
       generic.isList();
 
       // Then
-      expect(mockCore.assertDefined.calledWith(reference)).to.be.true;
-      expect(mockCore.assertNotNull.calledWith(reference)).to.be.true;
-      expect(mockCore.assertList.calledWith(reference)).to.be.true;
+      expect(core.assertDefined.calledWith(reference)).to.be.true;
+      expect(core.assertNotNull.calledWith(reference)).to.be.true;
+      expect(core.assertList.calledWith(reference)).to.be.true;
     });
   });
 });
