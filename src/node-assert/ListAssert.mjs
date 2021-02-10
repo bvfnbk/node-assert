@@ -3,6 +3,8 @@
  *
  * @author bvfnbk
  */
+import {IllegalArgumentError} from './error/index.mjs';
+
 class ListAssert {
   /**
    * Creates a number assert.
@@ -19,6 +21,33 @@ class ListAssert {
     this.core = core;
     this.value = value;
   }
+
+  /**
+   * Asserts that wrapped value is an empty list.
+   *
+   * @return {ListAssert} the current instance.
+   * @throws {IllegalArgumentError} if wrapped list is not empty.
+   */
+  isEmpty() {
+    if (this.value.length > 0) {
+      throw new IllegalArgumentError();
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that wrapped value is a non-empty list.
+   *
+   * @return {ListAssert} the current instance.
+   * @throws {IllegalArgumentError} if the wrapped list is empty.
+   */
+  isNotEmpty() {
+    if (this.value.length === 0) {
+      throw new IllegalArgumentError();
+    }
+    return this;
+  }
+
 }
 
 export default ListAssert;
