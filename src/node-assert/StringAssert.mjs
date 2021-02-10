@@ -11,10 +11,13 @@ class StringAssert {
    *
    * @param {module:core} core the core module providing all assert functions.
    * @param {string} value The value to wrap.
+   * @throws {UndefinedArgumentError} if given value is not defined.
+   * @throws {NullArgumentError} if given value is `null`.
    * @throws {TypeConstraintError} if given value is no `string`.
    */
   constructor(core, value) {
     core.assertString(value);
+
     this.core = core;
     this.value = value;
   }
@@ -29,6 +32,7 @@ class StringAssert {
     if (this.value.trim() === '') {
       throw new IllegalArgumentError();
     }
+
     return this;
   }
 
@@ -42,6 +46,7 @@ class StringAssert {
     if (this.value === '') {
       throw new IllegalArgumentError();
     }
+
     return this;
   }
 }
