@@ -9,15 +9,20 @@ const it = mocha.it;
 const expect = chai.expect;
 
 describe('Core -> assertNumber()', () => {
-  it('throws error if called with invalid or none parameters..', () => {
-    expect(() => assertNumber()).to.throw(UndefinedArgumentError);
-    expect(() => assertNumber(undefined)).to.throw(UndefinedArgumentError);
-    expect(() => assertNumber(null)).to.throw(NullArgumentError);
-    expect(() => assertNumber('1')).to.throw(TypeConstraintError);
-    expect(() => assertNumber([])).to.throw(TypeConstraintError);
-    expect(() => assertNumber({})).to.throw(TypeConstraintError);
-    expect(() => assertNumber(() => {
-    })).to.throw(TypeConstraintError);
+  const actualAssert = assertNumber;
+  [
+    ['none', () => actualAssert(), UndefinedArgumentError],
+    ['undefined', () => actualAssert(undefined), UndefinedArgumentError],
+    ['null', () => actualAssert(null), NullArgumentError],
+    ['string', () => actualAssert('1'), TypeConstraintError],
+    ['object', () => actualAssert({}), TypeConstraintError],
+    ['list', () => actualAssert([]), TypeConstraintError],
+    ['function', () => actualAssert(() => {
+    }), TypeConstraintError]
+  ].forEach(([type, closure, error]) => {
+    it(`throws error if called with ${type} parameter`, () => {
+      expect(closure).to.throw(error);
+    });
   });
 
   it('does not throw if given number.', () => {
