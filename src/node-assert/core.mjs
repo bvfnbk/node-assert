@@ -13,7 +13,7 @@ import {NullArgumentError, TypeConstraintError, UndefinedArgumentError} from './
  * @param {any[]} value The value to check.
  * @returns {boolean} `true` iff. given value is an array, `false` otherwise.
  */
-function _isArray(value) {
+function isArray(value) {
   if (typeof Array.isArray === 'undefined') {
     return Object.prototype.toString.call(value) === '[object Array]';
   } else {
@@ -87,7 +87,7 @@ function assertNumber(value) {
  */
 function assertList(value) {
   assertNotNull(value);
-  if (!_isArray(value)) {
+  if (!isArray(value)) {
     throw new TypeConstraintError();
   }
   return this;
@@ -106,12 +106,13 @@ function assertObject(value) {
   if (typeof value !== 'object') {
     throw new TypeConstraintError();
   }
-  if (_isArray(value)) {
+  if (isArray(value)) {
     throw new TypeConstraintError();
   }
 }
 
 export {
+  isArray,
   assertDefined,
   assertNotNull,
   assertString,
