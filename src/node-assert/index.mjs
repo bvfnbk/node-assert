@@ -3,6 +3,7 @@ import GenericAssert from './GenericAssert.mjs';
 import StringAssert from './StringAssert.mjs';
 import NumberAssert from './NumberAssert.mjs';
 import ListAssert from './ListAssert.mjs';
+import ObjectAssert from './ObjectAssert.mjs';
 
 /**
  * The asserts.
@@ -15,5 +16,6 @@ export {
   GenericAssert,
   StringAssert,
   NumberAssert,
-  ListAssert
+  ListAssert,
+  ObjectAssert
 };

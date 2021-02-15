@@ -1,6 +1,7 @@
 import StringAssert from './StringAssert.mjs';
 import NumberAssert from './NumberAssert.mjs';
 import ListAssert from './ListAssert.mjs';
+import ObjectAssert from './ObjectAssert.mjs';
 
 /**
  * A generic assert. Provides methods to assert common properties, like whether a value is defined or `null`.
@@ -51,7 +52,6 @@ class GenericAssert {
    * @throws {TypeConstraintError} if the contained value is no string.
    */
   isString() {
-    this.core.assertString(this.value);
     return new StringAssert(this.core, this.value);
   }
 
@@ -64,7 +64,6 @@ class GenericAssert {
    * @throws {TypeConstraintError} if the contained value is no number.
    */
   isNumber() {
-    this.core.assertNumber(this.value);
     return new NumberAssert(this.core, this.value);
   }
 
@@ -77,8 +76,11 @@ class GenericAssert {
    * @throws {TypeConstraintError} if the contained value is no list/array.
    */
   isList() {
-    this.core.assertList(this.value);
     return new ListAssert(this.core, this.value);
+  }
+
+  isObject() {
+    return new ObjectAssert(this.core, this.value);
   }
 }
 
