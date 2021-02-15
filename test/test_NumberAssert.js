@@ -33,8 +33,7 @@ describe('NumberAssert', () => {
     [
       [200, 100],
       [100, 100]
-    ].forEach(parameters => {
-      const [comparisonValue, reference] = parameters;
+    ].forEach(([comparisonValue, reference]) => {
       it(`throws an illegal argument error for ${reference} > ${comparisonValue} `, () => {
         const systemUnderTest = new NumberAssert(core, reference);
 
@@ -49,8 +48,7 @@ describe('NumberAssert', () => {
     [
       [50, 100],
       [100, 100]
-    ].forEach(parameters => {
-      const [comparisonValue, reference] = parameters;
+    ].forEach(([comparisonValue, reference]) => {
       it(`returns a number assert for ${reference} >= ${comparisonValue}`, () => {
         // Given
         const systemUnderTest = new NumberAssert(core, reference);
@@ -89,8 +87,7 @@ describe('NumberAssert', () => {
     [
       [50, 100],
       [100, 100]
-    ].forEach(parameters => {
-      const [comparisonValue, reference] = parameters;
+    ].forEach(([comparisonValue, reference]) => {
       it(`throws an illegal argument error for ${reference} < ${comparisonValue}`, () => {
         const systemUnderTest = new NumberAssert(core, reference);
 
@@ -105,8 +102,7 @@ describe('NumberAssert', () => {
     [
       [200, 100],
       [100, 100]
-    ].forEach(parameters => {
-      const [comparisonValue, reference] = parameters;
+    ].forEach(([comparisonValue, reference]) => {
       it(`returns a number assert for ${reference} <= ${comparisonValue}`, () => {
         // Given
         const systemUnderTest = new NumberAssert(core, reference);
@@ -146,8 +142,7 @@ describe('NumberAssert', () => {
     [
       [50, 100],
       [200, 100]
-    ].forEach(parameters => {
-      const [comparisonValue, reference] = parameters;
+    ].forEach(([comparisonValue, reference]) => {
       it(`throws an illegal argument error for ${reference} !== ${comparisonValue}`, () => {
         const systemUnderTest = new NumberAssert(core, reference);
 
@@ -164,8 +159,7 @@ describe('NumberAssert', () => {
       [50, 100, 200],
       [50, 50, 200],
       [50, 200, 200]
-    ].forEach(parameter => {
-      const [lower, reference, upper] = parameter;
+    ].forEach(([lower, reference, upper]) => {
       it(`returns a number assert for ${lower} <= ${reference} <= ${upper}`, () => {
         // Given
         const systemUnderTest = new NumberAssert(core, reference);
@@ -184,8 +178,7 @@ describe('NumberAssert', () => {
       [50, 0, 200], // < lower
       [50, 400, 200], // > upper
       [200, 100, 50] // lower > upper
-    ].forEach(parameter => {
-      const [lower, reference, upper] = parameter;
+    ].forEach(([lower, reference, upper]) => {
       it(`throws an illegal argument error for lower bound ${lower}, reference ${reference} and upper bound ${upper}`, () => {
         const systemUnderTest = new NumberAssert(core, reference);
 

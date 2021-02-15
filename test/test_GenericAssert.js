@@ -61,5 +61,15 @@ describe('GenericAssert', () => {
       expect(core.assertNotNull.calledWith(reference)).to.be.true;
       expect(core.assertList.calledWith(reference)).to.be.true;
     });
+
+    it('isObject()', () => {
+      // When
+      generic.isObject();
+
+      // Then
+      expect(core.assertDefined.calledWith(reference)).to.be.true;
+      expect(core.assertNotNull.calledWith(reference)).to.be.true;
+      expect(core.assertObject.calledWith(reference)).to.be.true;
+    });
   });
 });

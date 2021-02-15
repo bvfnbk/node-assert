@@ -12,7 +12,8 @@ const core = {
   assertNotNull: sinon.spy(),
   assertString: sinon.spy(),
   assertNumber: sinon.spy(),
-  assertList: sinon.spy()
+  assertList: sinon.spy(),
+  assertObject: sinon.spy()
 };
 
 export {

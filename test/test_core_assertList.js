@@ -9,15 +9,20 @@ const it = mocha.it;
 const expect = chai.expect;
 
 describe('Core -> assertList()', () => {
-  it('throws error if called with invalid or none parameters..', () => {
-    expect(() => assertList()).to.throw(UndefinedArgumentError);
-    expect(() => assertList(undefined)).to.throw(UndefinedArgumentError);
-    expect(() => assertList(null)).to.throw(NullArgumentError);
-    expect(() => assertList('1')).to.throw(TypeConstraintError);
-    expect(() => assertList(1)).to.throw(TypeConstraintError);
-    expect(() => assertList({})).to.throw(TypeConstraintError);
-    expect(() => assertList(() => {
-    })).to.throw(TypeConstraintError);
+  const actualAssert = assertList;
+  [
+    ['none', () => actualAssert(), UndefinedArgumentError],
+    ['undefined', () => actualAssert(undefined), UndefinedArgumentError],
+    ['null', () => actualAssert(null), NullArgumentError],
+    ['string', () => actualAssert('1'), TypeConstraintError],
+    ['number', () => actualAssert(1), TypeConstraintError],
+    ['object', () => actualAssert({}), TypeConstraintError],
+    ['function', () => actualAssert(() => {
+    }), TypeConstraintError]
+  ].forEach(([type, closure, error]) => {
+    it(`throws error if called with ${type} parameter`, () => {
+      expect(closure).to.throw(error);
+    });
   });
 
   it('does not throw if given list.', () => {
